@@ -9,6 +9,8 @@ psiThermo/basicPsiThermo/basicPsiThermoNew.C
 psiThermo/hPsiThermo/hPsiThermos.C
 psiThermo/hsPsiThermo/hsPsiThermos.C
 psiThermo/ePsiThermo/ePsiThermos.C
+psiThermo/realGasEThermo/realGasEThermos.C
+psiThermo/realGasHThermo/realGasHThermos.C
 
 rhoThermo/basicRhoThermo/basicRhoThermo.C
 rhoThermo/basicRhoThermo/basicRhoThermoNew.C

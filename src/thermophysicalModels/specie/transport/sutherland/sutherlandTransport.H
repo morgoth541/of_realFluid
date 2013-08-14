@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011-2012 OpenFOAM Foundation
+    \\  /    A nd           | Copyright held by original author
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -171,16 +171,19 @@ public:
         //- Write to Ostream
         void write(Ostream& os) const;
 
+        //- Thermal conductivity [W/mK]
+        inline scalar kappa(const scalar rho,const scalar T) const;
+
+        //- Thermal diffusivity for enthalpy [kg/ms]
+        inline scalar alpha(const scalar rho,const scalar T) const;
+
 
     // Member operators
 
-        inline sutherlandTransport& operator=(const sutherlandTransport&);
-
-        inline void operator+=(const sutherlandTransport&);
-
-        inline void operator-=(const sutherlandTransport&);
-
-        inline void operator*=(const scalar);
+        inline sutherlandTransport& operator=
+        (
+            const sutherlandTransport&
+        );
 
 
     // Friend operators

@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011-2012 OpenFOAM Foundation
+    \\  /    A nd           | Copyright held by original author
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -164,6 +164,39 @@ inline Foam::scalar Foam::sutherlandTransport<Thermo>::alpha
 }
 
 
+// CL: for real gas thermo
+// Thermal conductivity [W/mK]
+template<class thermo>
+inline Foam::scalar Foam::sutherlandTransport<thermo>::kappa
+(
+    const scalar rho,
+    const scalar T
+) const
+{
+    scalar Cv_ = this->Cv(rho,T);
+    return mu(T)*Cv_*(1.32 + 1.77*this->R()/Cv_);
+}
+
+
+// CL: for real gas thermo
+// Thermal diffusivity for enthalpy [kg/ms]
+template<class thermo>
+inline Foam::scalar Foam::sutherlandTransport<thermo>::alpha
+(
+    const scalar rho,
+    const scalar T
+) const
+{
+    scalar Cv_ = this->Cv(rho,T);
+    scalar Cp_ = this->Cp(rho,T);
+
+    scalar deltaT = T - specie::Tstd;
+    scalar CpBar =
+        (deltaT*(this->H(rho, T) - this->H(this->rhostd(),specie::Tstd)) + Cp_)/(sqr(deltaT) + 1);
+
+    return mu(T)*Cv_*(1.32 + 1.77*this->R()/Cv_)/CpBar;
+}
+
 // * * * * * * * * * * * * * * * Member Operators  * * * * * * * * * * * * * //
 
 template<class Thermo>
@@ -179,52 +212,6 @@ Foam::sutherlandTransport<Thermo>::operator=
     Ts_ = st.Ts_;
 
     return *this;
-}
-
-
-template<class Thermo>
-inline void Foam::sutherlandTransport<Thermo>::operator+=
-(
-    const sutherlandTransport<Thermo>& st
-)
-{
-    scalar molr1 = this->nMoles();
-
-    Thermo::operator+=(st);
-
-    molr1 /= this->nMoles();
-    scalar molr2 = st.nMoles()/this->nMoles();
-
-    As_ = molr1*As_ + molr2*st.As_;
-    Ts_ = molr1*Ts_ + molr2*st.Ts_;
-}
-
-
-template<class Thermo>
-inline void Foam::sutherlandTransport<Thermo>::operator-=
-(
-    const sutherlandTransport<Thermo>& st
-)
-{
-    scalar molr1 = this->nMoles();
-
-    Thermo::operator-=(st);
-
-    molr1 /= this->nMoles();
-    scalar molr2 = st.nMoles()/this->nMoles();
-
-    As_ = molr1*As_ - molr2*st.As_;
-    Ts_ = molr1*Ts_ - molr2*st.Ts_;
-}
-
-
-template<class Thermo>
-inline void Foam::sutherlandTransport<Thermo>::operator*=
-(
-    const scalar s
-)
-{
-    Thermo::operator*=(s);
 }
 
 

@@ -8,6 +8,17 @@ $(specie)/specie.C
 $(equationOfState)/perfectGas/perfectGas.C
 $(equationOfState)/incompressible/incompressible.C
 $(equationOfState)/isobaricPerfectGas/isobaricPerfectGas.C
+
+$(equationOfState)/cubicEquationOfState/redlichKwong/redlichKwong.C
+$(equationOfState)/cubicEquationOfState/aungierRedlichKwong/aungierRedlichKwong.C
+$(equationOfState)/cubicEquationOfState/pengRobinson/pengRobinson.C
+$(equationOfState)/cubicEquationOfState/soaveRedlichKwong/soaveRedlichKwong.C
+
+$(equationOfState)/cubicEquationOfState/mixtures/mixtureRedlichKwong/mixtureRedlichKwong.C
+$(equationOfState)/cubicEquationOfState/mixtures/mixturePengRobinson/mixturePengRobinson.C
+$(equationOfState)/cubicEquationOfState/mixtures/mixtureSoaveRedlichKwong/mixtureSoaveRedlichKwong.C
+$(equationOfState)/cubicEquationOfState/mixtures/mixtureAungierRedlichKwong/mixtureAungierRedlichKwong.C
+
 $(reactions)/makeReactionThermoReactions.C
 $(reactions)/makeLangmuirHinshelwoodReactions.C
 

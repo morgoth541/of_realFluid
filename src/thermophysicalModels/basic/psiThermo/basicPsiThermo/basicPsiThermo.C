@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
+    \\  /    A nd           | Copyright held by original author
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -47,5 +47,18 @@ Foam::basicPsiThermo::basicPsiThermo(const fvMesh& mesh)
 Foam::basicPsiThermo::~basicPsiThermo()
 {}
 
+// * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
+
+const Foam::volScalarField& Foam::basicPsiThermo::drhodh() const
+{
+    notImplemented("basicPsiThermo::drhodh()");
+    return const_cast<volScalarField&>(volScalarField::null());
+}
+
+const Foam::volScalarField& Foam::basicPsiThermo::drhode() const
+{
+    notImplemented("basicPsiThermo::drhode()");
+    return const_cast<volScalarField&>(volScalarField::null());
+}
 
 // ************************************************************************* //

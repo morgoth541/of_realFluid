@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
+    \\  /    A nd           | Copyright held by original author
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -125,15 +125,6 @@ public:
         //- Construct from dictionary
         constTransport(const dictionary& dict);
 
-        //- Construct and return a clone
-        inline autoPtr<constTransport> clone() const;
-
-        // Selector from Istream
-        inline static autoPtr<constTransport> New(Istream& is);
-
-        // Selector from dictionary
-        inline static autoPtr<constTransport> New(const dictionary& dict);
-
 
     // Member functions
 
@@ -146,6 +137,12 @@ public:
         //- Thermal diffusivity for enthalpy [kg/ms]
         inline scalar alpha(const scalar T) const;
 
+        //- Thermal conductivity [W/mK]
+        inline scalar kappa(const scalar rho,const scalar T) const;
+
+        //- Thermal diffusivity for enthalpy [kg/ms]
+        inline scalar alpha(const scalar rho,const scalar T) const;
+
         // Species diffusivity
         //inline scalar D(const scalar T) const;
 
@@ -155,13 +152,10 @@ public:
 
     // Member operators
 
-        inline constTransport& operator=(const constTransport&);
-
-        inline void operator+=(const constTransport&);
-
-        inline void operator-=(const constTransport&);
-
-        inline void operator*=(const scalar);
+        inline constTransport& operator=
+        (
+            const constTransport&
+        );
 
 
     // Friend operators

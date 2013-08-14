@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
+    \\  /    A nd           | Copyright held by original author
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -52,45 +52,6 @@ inline Foam::constTransport<Thermo>::constTransport
 {}
 
 
-template<class Thermo>
-inline Foam::autoPtr<Foam::constTransport<Thermo> >
-Foam::constTransport<Thermo>::clone() const
-{
-    return autoPtr<constTransport<Thermo> >
-    (
-        new constTransport<Thermo>(*this)
-    );
-}
-
-
-template<class Thermo>
-inline Foam::autoPtr<Foam::constTransport<Thermo> >
-Foam::constTransport<Thermo>::New
-(
-    Istream& is
-)
-{
-    return autoPtr<constTransport<Thermo> >
-    (
-        new constTransport<Thermo>(is)
-    );
-}
-
-
-template<class Thermo>
-inline Foam::autoPtr<Foam::constTransport<Thermo> >
-Foam::constTransport<Thermo>::New
-(
-    const dictionary& dict
-)
-{
-    return autoPtr<constTransport<Thermo> >
-    (
-        new constTransport<Thermo>(dict)
-    );
-}
-
-
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 template<class Thermo>
@@ -119,6 +80,27 @@ inline Foam::scalar Foam::constTransport<Thermo>::alpha(const scalar T) const
     return Cp_*mu(T)*rPr_/CpBar;
 }
 
+// CL: for real gas thermo
+// Thermal conductivity [W/mK]
+template<class thermo>
+inline Foam::scalar Foam::constTransport<thermo>::kappa(const scalar rho,const scalar T) const
+{
+    return this->Cp(rho,T)*mu(T)*rPr_;
+}
+
+// CL: for real gas thermo
+// Thermal diffusivity for enthalpy [kg/ms]
+template<class thermo>
+inline Foam::scalar Foam::constTransport<thermo>::alpha(const scalar rho,const scalar T) const
+{
+    scalar Cp_ = this->Cp(rho,T);
+
+    scalar deltaT = T - specie::Tstd;
+    scalar CpBar =
+        (deltaT*(this->H(rho,T) - this->H(this->rhostd(),specie::Tstd)) + Cp_)/(sqr(deltaT) + 1);
+
+    return Cp_*mu(T)*rPr_/CpBar;
+}
 
 // * * * * * * * * * * * * * * * Member Operators  * * * * * * * * * * * * * //
 
@@ -134,52 +116,6 @@ inline Foam::constTransport<Thermo>& Foam::constTransport<Thermo>::operator=
     rPr_ = ct.rPr_;
 
     return *this;
-}
-
-
-template<class Thermo>
-inline void Foam::constTransport<Thermo>::operator+=
-(
-    const constTransport<Thermo>& st
-)
-{
-    scalar molr1 = this->nMoles();
-
-    Thermo::operator+=(st);
-
-    molr1 /= this->nMoles();
-    scalar molr2 = st.nMoles()/this->nMoles();
-
-    mu_ = molr1*mu_ + molr2*st.mu_;
-    rPr_ = molr1*rPr_ + molr2*st.rPr_;
-}
-
-
-template<class Thermo>
-inline void Foam::constTransport<Thermo>::operator-=
-(
-    const constTransport<Thermo>& st
-)
-{
-    scalar molr1 = this->nMoles();
-
-    Thermo::operator-=(st);
-
-    molr1 /= this->nMoles();
-    scalar molr2 = st.nMoles()/this->nMoles();
-
-    mu_ = molr1*mu_ - molr2*st.mu_;
-    rPr_ = molr1*rPr_ - molr2*st.rPr_;
-}
-
-
-template<class Thermo>
-inline void Foam::constTransport<Thermo>::operator*=
-(
-    const scalar s
-)
-{
-    Thermo::operator*=(s);
 }
 
 

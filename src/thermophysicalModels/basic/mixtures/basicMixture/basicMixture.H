@@ -36,6 +36,7 @@ SourceFiles
 #define basicMixture_H
 
 #include "typeInfo.H"
+#include "volFields.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -66,6 +67,7 @@ public:
 
     //- Destructor
     virtual ~basicMixture();
+
 };
 
 

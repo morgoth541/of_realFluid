@@ -1,0 +1,77 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.6                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+
+    location    "constant";
+    object      thermophysicalProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<nasaHeatCapacityPolynomial<redlichKwong>>>>>;
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<nasaHeatCapacityPolynomial<aungierRedlichKwong>>>>>;
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<nasaHeatCapacityPolynomial<pengRobinson>>>>>;
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<nasaHeatCapacityPolynomial<soaveRedlichKwong>>>>>;
+
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<constantHeatCapacity<redlichKwong>>>>>;
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<constantHeatCapacity<aungierRedlichKwong>>>>>;
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<constantHeatCapacity<pengRobinson>>>>>;
+//thermoType      realGasHThermo<pureMixture<sutherlandTransport<realGasSpecieThermo<constantHeatCapacity<soaveRedlichKwong>>>>>;
+
+
+// Data for co2
+mixture
+{
+    specie
+    {
+        nMoles      1;
+        molWeight   44.01;
+    }
+    equationOfState
+    {
+        //CL: input data in SI units
+        pCritical    73.773e5;  //Pa
+        TCritical    304.13;    //K
+        //CL: not needed for redlichKwong
+        azentricFactor    0.22394;
+        //CL: needed for aungierRedlichKwong
+        rhoCritical 467.6;  //kg/m^3
+        //CL: rhoMin and rhoMax are only used as boundaries for the bisection methode
+        //CL: do not bound the density itself
+        //CL: if not supplied here, default values are used
+        rhoMax   1200;   //kg/m^3
+        rhoMin   0.01;   //kg/m^3
+    }
+   thermodynamics //CL: for nasaHeatCapacityPolynomial
+    {
+        a1    49436.5054;
+        a2    -626.411601;
+        a3    5.30172524;
+        a4    0.002503813816;
+        a5    -0.0000002127308728;
+        a6    -0.000000000768998878;
+        a7    2.849677801e-13;
+    }
+//CL: for realGasHConst
+//CL: perfect gas cp
+/*     thermodynamics 
+    {
+        cp    839; //J/kg
+    } */
+    transport
+    {
+        As          1.4792e-06;
+        Ts          116;
+    }
+}
+
+
