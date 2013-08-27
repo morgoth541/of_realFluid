@@ -58,8 +58,6 @@ Description
 
 #include "pureMixture.H"
 
-
-#include "binaryMixture.H"
 #include "mixtureRedlichKwong.H"
 #include "mixturePengRobinson.H"
 #include "mixtureSoaveRedlichKwong.H"
