@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011-2012 OpenFOAM Foundation
+    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -168,14 +168,6 @@ makeReactionMixtureThermo
     hReactionThermo,
     hRhoMixtureThermo,
     reactingMixture,
-    constIsobaricGasThermoPhysics
-);
-
-makeReactionMixtureThermo
-(
-    hReactionThermo,
-    hRhoMixtureThermo,
-    reactingMixture,
     icoPoly8ThermoPhysics
 );
 
@@ -185,14 +177,6 @@ makeReactionMixtureThermo
     hRhoMixtureThermo,
     reactingMixture,
     gasThermoPhysics
-);
-
-makeReactionMixtureThermo
-(
-    hReactionThermo,
-    hRhoMixtureThermo,
-    reactingMixture,
-    isobaricGasThermoPhysics
 );
 
 makeReactionMixtureThermo

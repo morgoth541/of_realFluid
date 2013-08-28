@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011-2012 OpenFOAM Foundation
+    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -40,8 +40,6 @@ SourceFiles
 #include "Switch.H"
 #include "scalarField.H"
 #include "volFieldsFwd.H"
-#include "volMesh.H"
-#include "DimensionedField.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -78,21 +76,15 @@ protected:
         //- Chemistry activation switch
         Switch chemistry_;
 
-        //- Initial chemical time step
-        const scalar deltaTChemIni_;
-
         //- Latest estimation of integration step
-        DimensionedField<scalar, volMesh> deltaTChem_;
+        scalarField deltaTChem_;
 
 
     // Protected Member Functions
 
         //- Return non-const access to the latest estimation of integration
         //  step, e.g. for multi-chemistry model
-        inline DimensionedField<scalar, volMesh>& deltaTChem();
-
-        //- Correct function - updates due to mesh changes
-        void correct();
+        scalarField& deltaTChem();
 
 
 public:
@@ -120,7 +112,7 @@ public:
         inline Switch chemistry() const;
 
         //- Return the latest estimation of integration step
-        inline const DimensionedField<scalar, volMesh>& deltaTChem() const;
+        inline const scalarField& deltaTChem() const;
 
 
         // Functions to be derived in derived classes

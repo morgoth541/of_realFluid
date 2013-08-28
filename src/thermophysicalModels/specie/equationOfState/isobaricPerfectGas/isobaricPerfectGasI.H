@@ -25,37 +25,23 @@ License
 
 #include "isobaricPerfectGas.H"
 
+// * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
+
+inline Foam::isobaricPerfectGas::isobaricPerfectGas(const specie& sp)
+:
+    specie(sp)
+{}
+
+
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
-
-
-inline Foam::isobaricPerfectGas::isobaricPerfectGas
-(
-    const specie& sp,  const scalar pRef
-)
-:
-    specie(sp),
-    pRef_(pRef)
-{}
-
-
-inline Foam::isobaricPerfectGas::isobaricPerfectGas
-(
-    const isobaricPerfectGas& ipg
-)
-:
-    specie(ipg),
-    pRef_(ipg.pRef_)
-{}
-
 
 inline Foam::isobaricPerfectGas::isobaricPerfectGas
 (
     const word& name,
-    const isobaricPerfectGas& ipg
+    const isobaricPerfectGas& pg
 )
 :
-    specie(name, ipg),
-    pRef_(ipg.pRef_)
+    specie(name, pg)
 {}
 
 
@@ -106,35 +92,15 @@ inline Foam::scalar Foam::isobaricPerfectGas::Z(scalar, scalar) const
 
 // * * * * * * * * * * * * * * * Member Operators  * * * * * * * * * * * * * //
 
-inline Foam::isobaricPerfectGas&
-Foam::isobaricPerfectGas::operator=(const isobaricPerfectGas& ipg)
+inline void Foam::isobaricPerfectGas::operator+=(const isobaricPerfectGas& pg)
 {
-    specie::operator=(ipg);
-
-    pRef_ = ipg.pRef_;
-
-    return *this;
+    specie::operator+=(pg);
 }
 
 
-inline void Foam::isobaricPerfectGas::operator+=(const isobaricPerfectGas& ipg)
+inline void Foam::isobaricPerfectGas::operator-=(const isobaricPerfectGas& pg)
 {
-    scalar molr1 = this->nMoles();
-
-    specie::operator+=(ipg);
-
-    molr1 /= this->nMoles();
-    scalar molr2 = ipg.nMoles()/this->nMoles();
-
-    pRef_ = molr1*pRef_ + molr2*ipg.pRef_;
-}
-
-
-inline void Foam::isobaricPerfectGas::operator-=(const isobaricPerfectGas& ipg)
-{
-    specie::operator-=(ipg);
-
-    pRef_ = ipg.pRef_;
+    specie::operator-=(pg);
 }
 
 
@@ -148,35 +114,28 @@ inline void Foam::isobaricPerfectGas::operator*=(const scalar s)
 
 inline Foam::isobaricPerfectGas Foam::operator+
 (
-    const isobaricPerfectGas& ipg1,
-    const isobaricPerfectGas& ipg2
+    const isobaricPerfectGas& pg1,
+    const isobaricPerfectGas& pg2
 )
 {
-    scalar nMoles = ipg1.nMoles() + ipg2.nMoles();
-    scalar molr1 = ipg1.nMoles()/nMoles;
-    scalar molr2 = ipg2.nMoles()/nMoles;
-
     return isobaricPerfectGas
     (
-        static_cast<const specie&>(ipg1)
-      + static_cast<const specie&>(ipg2),
-        molr1*ipg1.pRef_ + molr2*ipg2.pRef_
+        static_cast<const specie&>(pg1)
+      + static_cast<const specie&>(pg2)
     );
 }
 
 
 inline Foam::isobaricPerfectGas Foam::operator-
 (
-    const isobaricPerfectGas& ipg1,
-    const isobaricPerfectGas& ipg2
+    const isobaricPerfectGas& pg1,
+    const isobaricPerfectGas& pg2
 )
 {
-
     return isobaricPerfectGas
     (
-        static_cast<const specie&>(ipg1)
-      - static_cast<const specie&>(ipg2),
-        ipg1.pRef_
+        static_cast<const specie&>(pg1)
+      - static_cast<const specie&>(pg2)
     );
 }
 
@@ -184,10 +143,10 @@ inline Foam::isobaricPerfectGas Foam::operator-
 inline Foam::isobaricPerfectGas Foam::operator*
 (
     const scalar s,
-    const isobaricPerfectGas& ipg
+    const isobaricPerfectGas& pg
 )
 {
-    return isobaricPerfectGas(s*static_cast<const specie&>(ipg), ipg.pRef_);
+    return isobaricPerfectGas(s*static_cast<const specie&>(pg));
 }
 
 

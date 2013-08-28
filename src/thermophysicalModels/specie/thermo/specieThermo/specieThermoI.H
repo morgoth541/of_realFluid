@@ -204,7 +204,7 @@ inline Foam::scalar Foam::specieThermo<Thermo>::K(const scalar T) const
 
     if (arg < 600.0)
     {
-        return exp(arg);
+        return ::exp(arg);
     }
     else
     {

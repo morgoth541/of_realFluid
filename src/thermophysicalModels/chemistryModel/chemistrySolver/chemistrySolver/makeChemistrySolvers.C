@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011-2012 OpenFOAM Foundation
+    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -33,15 +33,11 @@ License
 
 namespace Foam
 {
-    makeChemistrySolverTypes(psiChemistryModel, constGasThermoPhysics);
     makeChemistrySolverTypes(psiChemistryModel, gasThermoPhysics);
-    makeChemistrySolverTypes(psiChemistryModel, constIsobaricGasThermoPhysics);
-    makeChemistrySolverTypes(psiChemistryModel, isobaricGasThermoPhysics);
+    makeChemistrySolverTypes(psiChemistryModel, constGasThermoPhysics);
     makeChemistrySolverTypes(psiChemistryModel, icoPoly8ThermoPhysics);
-    makeChemistrySolverTypes(rhoChemistryModel, constGasThermoPhysics);
     makeChemistrySolverTypes(rhoChemistryModel, gasThermoPhysics);
-    makeChemistrySolverTypes(rhoChemistryModel, constIsobaricGasThermoPhysics);
-    makeChemistrySolverTypes(rhoChemistryModel, isobaricGasThermoPhysics);
+    makeChemistrySolverTypes(rhoChemistryModel, constGasThermoPhysics);
     makeChemistrySolverTypes(rhoChemistryModel, icoPoly8ThermoPhysics);
 }
 

@@ -19,6 +19,8 @@ $(equationOfState)/cubicEquationOfState/mixtures/mixturePengRobinson/mixturePeng
 $(equationOfState)/cubicEquationOfState/mixtures/mixtureSoaveRedlichKwong/mixtureSoaveRedlichKwong.C
 $(equationOfState)/cubicEquationOfState/mixtures/mixtureAungierRedlichKwong/mixtureAungierRedlichKwong.C
 
+
+$(reactions)/makeChemkinReactions.C
 $(reactions)/makeReactionThermoReactions.C
 $(reactions)/makeLangmuirHinshelwoodReactions.C
 

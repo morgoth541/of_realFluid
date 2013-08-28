@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     |
-    \\  /    A nd           | Copyright (C) 2011-2012 OpenFOAM Foundation
+    \\  /    A nd           | Copyright (C) 2011 OpenFOAM Foundation
      \\/     M anipulation  |
 -------------------------------------------------------------------------------
 License
@@ -33,7 +33,6 @@ Description
 #define thermoPhysicsTypes_H
 
 #include "perfectGas.H"
-#include "isobaricPerfectGas.H"
 #include "hConstThermo.H"
 #include "janafThermo.H"
 #include "specieThermo.H"
@@ -48,17 +47,11 @@ Description
 
 namespace Foam
 {
-    typedef constTransport<specieThermo<hConstThermo<perfectGas> > >
-        constGasThermoPhysics;
-
     typedef sutherlandTransport<specieThermo<janafThermo<perfectGas> > >
         gasThermoPhysics;
 
-    typedef constTransport<specieThermo<hConstThermo<isobaricPerfectGas> > >
-        constIsobaricGasThermoPhysics;
-
-    typedef sutherlandTransport<specieThermo<janafThermo<isobaricPerfectGas> > >
-        isobaricGasThermoPhysics;
+    typedef constTransport<specieThermo<hConstThermo<perfectGas> > >
+        constGasThermoPhysics;
 
     typedef polynomialTransport
         <
@@ -80,3 +73,4 @@ namespace Foam
 #endif
 
 // ************************************************************************* //
+
