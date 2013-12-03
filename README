@@ -63,5 +63,5 @@ Features
 git commit: "add new ReadMe file"
    --> added this file
 
-
+git commit: "corrected bug in makeBasicPsiThermo.H"
    
